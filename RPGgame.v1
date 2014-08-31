@@ -1,0 +1,374 @@
+import os
+import random
+
+def cls():
+    os.system(['clear','cls'][os.name == 'nt'])
+def check():
+    check_time()
+    check_level()
+def check_level():
+    global charmaxhp, charmaxmana, charatt, chardef, charhp, exp, maxexp, charmana, charclass, level, oldexp, levelup
+    if (exp >= maxexp):
+        oldexp = exp - maxexp
+        level = level + 1
+        print "You have leveled up to level {}!".format(level)
+        charmaxhp = charmaxhp + 20
+        charmaxmana = charmaxmana + 20
+        charatt = charatt + 10
+        chardef = chardef + 10
+        maxexp = maxexp + 50
+        exp = oldexp
+        charhp = charmaxhp
+        levelup = 1
+        if (charclass == 'Mage'):
+            charmana = charmaxmana
+def overlay():
+    global quest2comp
+    if (gotweapon == 1):
+        quest2comp = 1
+    print "                             Day: {},{}:00".format(day,time)
+    print "                               {}".format(charname)
+    print "                               {}/{}".format(exp, maxexp)
+    print "Level: {} | Health: {} | Current quests | Mana: {} | Gold: {} |".format(level, charhp, charmana, gold)
+    print "Attack: {} | Defence: {} | Health Potions: {} | Mana Potions: {} |".format(charatt, chardef, potionhp, potionmana)
+    print "*" * 60
+    if (quest1comp == 0):
+        print quest1,"{}/5".format(killspiders)
+    elif (quest2comp == 0):
+        print quest2,"{}/1".format(gotweapon)
+    else:
+        print "No current quests."
+    print "*" * 60
+def check_time():
+    global time
+    time = time + 1
+    if (time >=  24):
+        global day
+        time = 0
+        day = day + 1
+
+killspiders = 0
+gotweapon = 0
+quest1comp = 0
+quest2comp = 0
+quest1 = "- Kill 5 spiders:"
+quest2 = "- Buy a weapon from the blacksmith:"
+
+cls()
+charname = raw_input("Please type the character name you desire: ")
+cls()
+time = 12
+day = 1
+print "1: Archer 2: Warrior 3: Mage"
+charclass = raw_input("Please choose a class from above: ")
+if (charclass == '1'):
+    charatt = 30
+    chardef = 10
+    charmana = 0
+    charmaxmana = 0
+elif (charclass == '2'):
+    charatt = 20
+    chardef = 20
+    charmana = 0
+    charmaxmana = 0
+elif (charclass == '3'):
+    charatt = 40
+    chardef = 15
+    charmana = 100
+    charmaxmana = 100
+charhp = 100
+charmaxhp = 100
+level = 1
+exp = 0
+levelup = 0
+maxexp = 100
+cls()
+print "Your character has been created."
+alive = 1
+potionhp = 0
+potionmana = 0
+gold = 0
+firsttime = 1
+times = 0
+while (alive == 1):
+    while (firsttime == 1):
+        overlay()
+        print "You appear to be in a abandoned village at the land of Anbroze."
+        print "1: Leave 2: Search"
+        choice = raw_input("Do you want to search the village or leave: ")
+        check()
+        if (choice == 'debug'):
+            firsttime = 0
+            intown = 'lol'
+            wantgold = input("How much gold do you want: ")
+            gold = gold + wantgold
+            wantexp = input("How much exp you want: ")
+            exp = exp + wantexp
+        cls()
+        if (choice == '2'):
+            times = times + 1
+            if (times < 4):
+                item = random.randint(1,3)
+                randomgold = random.randint(3,10)
+                if (item == 1):
+                    print "You have found a wooden sword!"
+                    woodensword = 1
+                elif (item == 2):
+                    print "You have found a wooden bow!"
+                    woodenbow = 1
+                elif (item == 3):
+                    print "You have found a wooden staff!"
+                    woodenstaff = 1
+                gold = gold + randomgold
+                print "You have also found", randomgold, "gold."
+            elif (times == 4):
+                firsttime = 0
+                cls()
+                print 'You have fell asleep while searching the village and you wake up in a city.'
+                print 'The city banners have a lion on them and you remember that the towns name is Mable'
+                intown = 'mable'
+        elif (choice == '1'):
+            firsttime = 0
+            intown = 'none'
+            cls()
+    while (intown == 'mable'):
+        overlay()
+        print '1: Blacksmith - Take a walk to the blacksmith to buy some armor/weapons.'
+        print '2: Market - Take a walk to the market to buy some items.'
+        print "3: Hall - Go to the town's hall."
+        print '4: Inn - Go to a inn and take a sleep.'
+        print '5: Leave - Leave the town.'
+        choice = raw_input("Select some of the commands above: ")
+        cls()
+        check()
+        overlay()
+        if (choice == '1'):
+            print 'You have entered the blacksmith.'
+            print '1: Bronze Sword(10g) 2: Short Bow(10g) 3: Bronze Staff(10g)'
+            print '4: Bronze Helmet(15g) 5: Bronze Chestplate(25g) 6: Bronze Leggings(20g)'
+            choice = raw_input('Type the number of which item you want to buy from above: ')
+            cls()
+            check()
+            overlay()
+            if (choice == '1'):
+                if (charclass != '1'):
+                    print "You are not the required class for this item."
+                elif (gold > 9):
+                    print "You have successfully bought a Bronze Sword."
+                    bronzesword = 1
+                    gotweapon = 1
+                    charatt = charatt + 10
+                    gold = gold - 10
+                elif (gold < 10):
+                    print "You don't have enough gold for this item."
+            elif (choice == '2'):
+                if (charclass != '2'):
+                    print "You are not the required class for this item."
+                elif (gold > 9):
+                    print "You have successfully bought a Short Bow."
+                    shotbow = 1
+                    charatt = charatt + 10
+                    gotweapon = 1
+                    gold = gold - 10
+                elif (gold < 10):
+                    print "You don't have enough gold for this item."
+            elif (choice == '3'):
+                if (charclass != '3'):
+                    print "You are not the required class for this item."
+                elif (gold > 9):
+                    print "You have successfully bought a Bronze Staff."
+                    bronzestaff = 1
+                    gotweapon = 1
+                    charatt = charatt + 10
+                    gold = gold - 10
+                elif (gold < 10):
+                    print "You don't have enough gold for this item."
+            elif (choice == '4'):
+                if (gold > 14):
+                    print "You have successfully bought a Bronze Helmet."
+                    bronzehelmet = 1
+                    chardef = chardef + 5
+                    gold = gold - 15
+                elif (gold < 15):
+                    print "You don't have enough gold for this item."
+            elif (choice == '5'):
+                if (gold > 24):
+                    print "You have successfully bought a Bronze Chestplate."
+                    bronzechestplate = 1
+                    chardef = chardef + 15
+                    gold = gold - 25
+                elif (gold < 25):
+                    print "You don't have enough gold for this item."
+            elif (choice == '6'):
+                if (gold > 19):
+                    print "You have successfully bought Bronze Leggings."
+                    bronzeleggings = 1
+                    chardef = chardef + 10
+                    gold = gold - 20
+                elif (gold < 20):
+                    print "You don't have enough gold for this item."
+        elif (choice == '2'):
+            print '1: Potion of Health(5g) 2: Potion of Mana(10g)'
+            choice = raw_input('Choose a number next to the item you want to buy: ')
+            cls()
+            check()
+            overlay()
+            if (choice == '1'):
+                if (gold >= 5):
+                    print "You have successfully bought a Potion of Health."
+                    potionhp = potionhp + 1
+                    gold = gold - 5
+                elif (gold < 5):
+                    print "You don't have enought gold for this item."
+            elif (choice == '2'):
+                if (gold >= 10):
+                    print "You have successfully bought a Potion of Mana."
+                    potionmana = potionmana + 1
+                    gold = gold - 5
+                elif (gold < 10):
+                    print "You don't have enought gold for this item."
+        elif (choice == '3'):
+            print "The hall is empty."
+            check()
+        elif (choice == '4'):
+            print "1: Sleep for a day(10g) 2: Sleep for a week(60g)"
+            choice = raw_input("Choose a number next to a choice you want: ")
+            check()
+            if (choice == '1'):
+                if (gold > 9):
+                    print "You have gone to sleep and you awake the day after."
+                    gold = gold - 10
+                elif (gold <10):
+                    print "You don't have enough gold for that choice."
+            elif (choice == '2'):
+                if (gold > 59):
+                    print "You have gone to sleep and you awake the week after."
+                    gold = gold - 60
+                elif (gold <60):
+                    print "You don't have enough gold for that choice."
+        elif (choice == '5'):
+            intown = 0
+    cls()
+    overlay()
+    print "You come to a crosing on the road and two signs."
+    print "1: Mable 2: Forest"
+    choice = raw_input("Choose the number next to a path you want to go: ")
+    if (choice == '1'):
+        intown = 'mable'
+    elif (choice == '2'):
+        intown = 'forest'
+    cls()
+    while (intown == 'forest'):
+        if (level >= 1):
+            fight = 1
+            while (fight == 1):
+                overlay()
+                check()
+                print "You meet a spider on the way, do you fight him or leave?"
+                choice = raw_input("1: Fight 2: Leave: ")
+                cls()
+                if (choice == '1'):
+                    fight = 1
+                    if (level == 1):
+                        spiderhp = 50
+                        spidermaxhp = 50
+                        spideratt = 30
+                        goldgotmax = 5
+                        goldgotmin = 1
+                        expgotmax = 20
+                        expgotmin = 10
+                        goldgot = random.randint(goldgotmin,goldgotmax)
+                        expgot = random.randint(expgotmin,expgotmax)
+                    global levelup
+                    if (levelup == 1):
+                        spidermaxhp = spidermaxhp + 25
+                        spideratt = spideratt + 10
+                        spiderhp = spidermaxhp
+                        goldgotmax = goldgotmax + 5
+                        goldgotmin = goldgotmin + 5
+                        expgotmax = expgotmax + 15
+                        expgotmin = expgotmin + 15
+                        goldgot = random.randint(goldgotmin,goldgotmax)
+                        expgot = random.randint(expgotmin,expgotmax)
+                        levelup = 0
+                    spiderhp = spidermaxhp
+                    while (fight == 1):
+                        overlay()
+                        print "Your health:",charhp,"/",charmaxhp
+                        print "Spider's health:",spiderhp,"/",spidermaxhp
+                        choice = raw_input("1: Attack 2: Use health potion 3: Use mana potion 4: Flee: ")
+                        cls()
+                        if (choice == '1'):
+                            if (charclass == '3'):
+                                if (charmana >= 10):
+                                    charmana = charmana - 10
+                                    spiderattacked = random.randint(10,spideratt)
+                                    spiderattacked = spiderattacked - chardef / 3
+                                    charattacked = random.randint(10,charatt)
+                                    charhp = charhp - spiderattacked
+                                    spiderhp = spiderhp - charattacked
+                                    if (spiderhp <= 0):
+                                        killspiders = killspiders + 1                                    
+                                        spiderhp = spidermaxhp
+                                        fight = 0
+                                        print "You have killed the spider."
+                                        if (killspiders == 5):
+                                            quest1comp = 1
+                                        gold = gold + goldgot
+                                        exp = exp + expgot
+                                        check()
+                                    if (charhp <= 0):
+                                        fight = 0                                    
+                                        intown = 0
+                                        alive = 0
+                                        print "You have died."
+                                elif (charmana < 10):
+                                    print "You don't have enough mana to attack."
+                            else:
+                                spiderattacked = random.randint(10,spideratt)
+                                spiderattacked = spiderattacked - chardef / 3
+                                charattacked = random.randint(10,charatt)
+                                charhp = charhp - spiderattacked
+                                spiderhp = spiderhp - charattacked
+                                if (spiderhp <= 0):
+                                    killspiders = killspiders + 1                                    
+                                    spiderhp = spidermaxhp
+                                    fight = 0
+                                    print "You have killed the spider."
+                                    if (killspiders == 5):
+                                        quest1comp = 1
+                                    gold = gold + goldgot
+                                    exp = exp + expgot
+                                    check()
+                                if (charhp <= 0):
+                                    fight = 0                                    
+                                    intown = 0
+                                    alive = 0
+                                    print "You have died."
+                        elif (choice == '2'):
+                            if (potionhp >= 1):
+                                print "You have used a potion of health!"
+                                charhp = charmaxhp
+                                potionhp = potionhp - 1
+                            elif (potionhp <= 0):
+                                print "You don't have a health potion."
+                        elif (choice == '3'):
+                            if (potionmana >= 1):
+                                print "You have used a potion of mana!"
+                                charmana = charmaxmana
+                                potionmana = potionmana - 1
+                            elif (potionmana <= 0):
+                                print "You don't have a health potion."
+                        elif (choice == '4'):
+                            chance = random.randint(1,2)
+                            check()
+                            if (chance == 1):
+                                spiderattacked = random.randint(10,spideratt)
+                                spiderattacked = spiderattacked - chardef
+                                charhp = charhp - spiderattacked
+                                fight = 0
+                            elif (chance == 2):
+                                fight = 0
+                elif (choice == '2'):
+                    intown = 'none'
+                    fight = 0
