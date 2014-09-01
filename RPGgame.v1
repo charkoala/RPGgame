@@ -48,9 +48,9 @@ def check_time():
         day = day + 1
 
 killspiders = 0
-gotweapon = 0
-quest1comp = 0
-quest2comp = 0
+gotweapon   = 0
+quest1comp  = 0
+quest2comp  = 0
 quest1 = "- Kill 5 spiders:"
 quest2 = "- Buy a weapon from the blacksmith:"
 
@@ -62,34 +62,34 @@ day = 1
 print "1: Archer 2: Warrior 3: Mage"
 charclass = raw_input("Please choose a class from above: ")
 if (charclass == '1'):
-    charatt = 30
-    chardef = 10
-    charmana = 0
+    charatt     = 30
+    chardef     = 10
+    charmana    = 0
     charmaxmana = 0
 elif (charclass == '2'):
-    charatt = 20
-    chardef = 20
-    charmana = 0
+    charatt     = 20
+    chardef     = 20
+    charmana    = 0
     charmaxmana = 0
 elif (charclass == '3'):
-    charatt = 40
-    chardef = 15
-    charmana = 100
+    charatt     = 40
+    chardef     = 15
+    charmana    = 100
     charmaxmana = 100
-charhp = 100
+charhp    = 100
 charmaxhp = 100
-level = 1
-exp = 0
-levelup = 0
-maxexp = 100
+level     = 1
+exp       = 0
+levelup   = 0
+maxexp    = 100
+alive      = 1
+potionhp   = 0
+potionmana = 0
+gold       = 0
+firsttime  = 1
+times      = 0
 cls()
 print "Your character has been created."
-alive = 1
-potionhp = 0
-potionmana = 0
-gold = 0
-firsttime = 1
-times = 0
 while (alive == 1):
     while (firsttime == 1):
         overlay()
