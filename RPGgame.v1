@@ -97,13 +97,6 @@ while (alive == 1):
         print "1: Leave 2: Search"
         choice = raw_input("Do you want to search the village or leave: ")
         check()
-        if (choice == 'debug'):
-            firsttime = 0
-            intown = 'lol'
-            wantgold = input("How much gold do you want: ")
-            gold = gold + wantgold
-            wantexp = input("How much exp you want: ")
-            exp = exp + wantexp
         cls()
         if (choice == '2'):
             times = times + 1
